@@ -292,7 +292,7 @@
 <div class="accordion accordion-flush" id="accordionFlush6">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading6">
-        <a href="05-clustering.html">5. </a>
+        <a href="05-clustering.html">5. Unsupervised methods - Clustering</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -304,7 +304,7 @@
 <div class="accordion accordion-flush" id="accordionFlush7">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading7">
-        <a href="06-dimensionality-reduction.html">6. </a>
+        <a href="06-dimensionality-reduction.html">6. Unsupervised methods - Dimensionality reduction</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -316,7 +316,7 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="07-neural-networks.html">7. </a>
+        <a href="07-neural-networks.html">7. Neural Networks</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -328,7 +328,7 @@
 <div class="accordion accordion-flush" id="accordionFlush9">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading9">
-        <a href="08-ethics.html">8. </a>
+        <a href="08-ethics.html">8. Ethics and the Implications of Machine Learning</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -340,7 +340,7 @@
 <div class="accordion accordion-flush" id="accordionFlush10">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading10">
-        <a href="09-learn-more.html">9. </a>
+        <a href="09-learn-more.html">9. Find out more</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -970,7 +970,7 @@ between the linear regressions on the 4 datasets?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1113,7 +1113,7 @@ each dataset?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -2325,7 +2325,7 @@ Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
  -->
 </div>
-</section></section><section id="aio-05-clustering"><p>Content from <a href="05-clustering.html"></a></p>
+</section></section><section id="aio-05-clustering"><p>Content from <a href="05-clustering.html">Unsupervised methods - Clustering</a></p>
 <hr>
 <p>Last updated on 2025-12-05 |
 
@@ -2340,6 +2340,11 @@ any links that you are not going to use.
 <div class="card-body">
 <div class="inner">
 <h3 class="card-title">Questions</h3>
+<ul>
+<li>What is unsupervised learning?</li>
+<li>How can we use clustering to find data points with similar
+attributes?</li>
+</ul>
 </div>
 </div>
 </div>
@@ -2347,7 +2352,494 @@ any links that you are not going to use.
 <div class="card-body">
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
+<ul>
+<li>Understand the difference between supervised and unsupervised
+learning</li>
+<li>Identify clusters in data using k-means clustering.</li>
+<li>Understand the limitations of k-means when clusters overlap.</li>
+<li>Use spectral clustering to overcome the limitations of k-means.</li>
+</ul>
 </div>
+</div>
+</div>
+</div>
+</div>
+<section><h2 class="section-heading" id="unsupervised-learning">Unsupervised learning<a class="anchor" aria-label="anchor" href="#unsupervised-learning"></a>
+</h2>
+<hr class="half-width">
+<p>In episode 2 we learnt about supervised learning. Now it is time to
+explore unsupervised learning.</p>
+<p>Sometimes we do not have the luxury of using labelled data. This
+could be for a number of reasons:</p>
+<ul>
+<li>We have labelled data, but not enough to accurately train our
+model</li>
+<li>Our existing labelled data is low-quality or innacurate</li>
+<li>It is too time-consuming to (manually) label more data</li>
+<li>We have data, but no idea what correlations might exist that we
+could model!</li>
+</ul>
+<p>In this case we need to use unsupervised learning. As the name
+suggests, this time we do not “supervise” the ML algorithm by providing
+it labels, but instead we let it try to find its own patterns in the
+data and report back on any correlations that it might find. You can
+think of unsupervised learning as a way to discover labels from the data
+itself.</p>
+</section><section><h2 class="section-heading" id="clustering">Clustering<a class="anchor" aria-label="anchor" href="#clustering"></a>
+</h2>
+<hr class="half-width">
+<p>Clustering is the grouping of data points which are similar to each
+other. It can be a powerful technique for identifying patterns in data.
+Clustering analysis does not usually require any training and is
+therefore known as an unsupervised learning technique. Clustering can be
+applied quickly due to this lack of training.</p>
+</section><section><h2 class="section-heading" id="applications-of-clustering">Applications of clustering<a class="anchor" aria-label="anchor" href="#applications-of-clustering"></a>
+</h2>
+<hr class="half-width">
+<ul>
+<li>Looking for trends in data</li>
+<li>Reducing the data around a point to just that point (e.g. reducing
+colour depth in an image)</li>
+<li>Pattern recognition</li>
+</ul>
+<div class="section level3">
+<h3 id="k-means-clustering">K-means clustering<a class="anchor" aria-label="anchor" href="#k-means-clustering"></a>
+</h3>
+<p>The k-means clustering algorithm is a simple clustering algorithm
+that tries to identify the centre of each cluster. It does this by
+searching for a point which minimises the distance between the centre
+and all the points in the cluster. The algorithm needs to be told how
+many k clusters to look for, but a common technique is to try different
+numbers of clusters and combine it with other tests to decide on the
+best combination.</p>
+<div id="hyper-parameters-again" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="hyper-parameters-again" class="callout-inner">
+<h3 class="callout-title">Hyper-parameters again</h3>
+<div class="callout-content">
+<p>‘K’ is also an exmaple of a <em>hyper-parameter</em> for the k-means
+clustering technique. Another example of a hyper-parameter is the
+N-degrees of freedom for polynomial regression. Keep an eye out for
+others throughout the lesson!</p>
+</div>
+</div>
+</div>
+<div class="section level4">
+<h4 id="k-means-with-scikit-learn">K-means with Scikit-Learn<a class="anchor" aria-label="anchor" href="#k-means-with-scikit-learn"></a>
+</h4>
+<p>To perform a k-means clustering with Scikit-Learn we first need to
+import the sklearn.cluster module.</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="im">import</span> sklearn.cluster <span class="im">as</span> skl_cluster</span></code></pre>
+</div>
+<p>For this example, we’re going to use Scikit-Learn’s built-in ‘random
+data blob generator’ instead of using an external dataset. Therefore
+we’ll need the <code>sklearn.datasets.samples_generator</code>
+module.</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="im">import</span> sklearn.datasets <span class="im">as</span> skl_datasets</span></code></pre>
+</div>
+<p>Now lets create some random blobs using the <code>make_blobs</code>
+function. The <code>n_samples</code> argument sets how many points we
+want to use in all of our blobs while <code>cluster_std</code> sets the
+standard deviation of the points. The smaller this value the closer
+together they will be. <code>centers</code> sets how many clusters we’d
+like. <code>random_state</code> is the initial state of the random
+number generator. By specifying this value we’ll get the same results
+every time we run the program. If we don’t specify a random state then
+we’ll get different points every time we run. This function returns two
+things: an array of data points and a list of which cluster each point
+belongs to.</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#Lets define some functions here to avoid repetitive code</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="kw">def</span> plots_labels(data, labels):</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>    tx <span class="op">=</span> data[:, <span class="dv">0</span>]</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>    ty <span class="op">=</span> data[:, <span class="dv">1</span>]</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>    fig <span class="op">=</span> plt.figure(<span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">4</span>))</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>    plt.scatter(tx, ty, edgecolor<span class="op">=</span><span class="st">'k'</span>, c<span class="op">=</span>labels)</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>    plt.show()</span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="kw">def</span> plot_clusters(data, clusters, Kmean):</span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>    tx <span class="op">=</span> data[:, <span class="dv">0</span>]</span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>    ty <span class="op">=</span> data[:, <span class="dv">1</span>]</span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>    fig <span class="op">=</span> plt.figure(<span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">4</span>))</span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a>    plt.scatter(tx, ty, s<span class="op">=</span><span class="dv">5</span>, linewidth<span class="op">=</span><span class="dv">0</span>, c<span class="op">=</span>clusters)</span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a>    <span class="cf">for</span> cluster_x, cluster_y <span class="kw">in</span> Kmean.cluster_centers_:</span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a>        plt.scatter(cluster_x, cluster_y, s<span class="op">=</span><span class="dv">100</span>, c<span class="op">=</span><span class="st">'r'</span>, marker<span class="op">=</span><span class="st">'x'</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a>    plt.show()</span></code></pre>
+</div>
+<p>Lets create the clusters.</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>data, cluster_id <span class="op">=</span> skl_datasets.make_blobs(n_samples<span class="op">=</span><span class="dv">400</span>, cluster_std<span class="op">=</span><span class="fl">0.75</span>, centers<span class="op">=</span><span class="dv">4</span>, random_state<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>plots_labels(data, cluster_id)</span></code></pre>
+</div>
+<figure><img src="fig/clustering/random_clusters.png" alt="Plot of the random clusters" class="figure mx-auto d-block"><div class="figcaption">Plot of the random clusters</div>
+</figure><p>Now that we have some data we can try to identify the clusters using
+k-means. First, we need to initialise the KMeans module and tell it how
+many clusters to look for. Next, we supply it with some data via the
+<code>fit</code> function, in much the same way we did with the
+regression functions earlier on. Finally, we run the predict function to
+find the clusters.</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>Kmean <span class="op">=</span> skl_cluster.KMeans(n_clusters<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>Kmean.fit(data)</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>clusters <span class="op">=</span> Kmean.predict(data)</span></code></pre>
+</div>
+<p>The data can now be plotted to show all the points we randomly
+generated. To make it clearer which cluster points have been classified
+we can set the colours (the c parameter) to use the
+<code>clusters</code> list that was returned by the <code>predict</code>
+function. The Kmeans algorithm also lets us know where it identified the
+centre of each cluster. These are stored as a list called
+‘cluster_centers_’ inside the <code>Kmean</code> object. Let’s plot the
+points from the clusters, colouring them by the output from the K-means
+algorithm, and also plot the centres of each cluster as a red X.</p>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>plot_clusters(data, clusters, Kmean)</span></code></pre>
+</div>
+<figure><img src="fig/clustering/random_clusters_centre.png" alt="Plot of the fitted random clusters" class="figure mx-auto d-block"><div class="figcaption">Plot of the fitted random clusters</div>
+</figure><p>Here is the code all in a single block.</p>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="im">import</span> sklearn.cluster <span class="im">as</span> skl_cluster</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="im">import</span> sklearn.datasets <span class="im">as</span> skl_datasets</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>data, cluster_id <span class="op">=</span> skl_datasets.make_blobs(n_samples<span class="op">=</span><span class="dv">400</span>, cluster_std<span class="op">=</span><span class="fl">0.75</span>, centers<span class="op">=</span><span class="dv">4</span>, random_state<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>Kmean <span class="op">=</span> skl_cluster.KMeans(n_clusters<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>Kmean.fit(data)</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>clusters <span class="op">=</span> Kmean.predict(data)</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>plot_clusters(data, clusters, Kmean)</span></code></pre>
+</div>
+<div id="working-in-multiple-dimensions" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="working-in-multiple-dimensions" class="callout-inner">
+<h3 class="callout-title">Working in multiple dimensions</h3>
+<div class="callout-content">
+<p>Although this example shows two dimensions, the kmeans algorithm can
+work in more than two. It becomes very difficult to show this visually
+once we get beyond 3 dimensions. Its very common in machine learning to
+be working with multiple variables and so our classifiers are working in
+multi-dimensional spaces.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section level4">
+<h4 id="limitations-of-k-means">Limitations of k-means<a class="anchor" aria-label="anchor" href="#limitations-of-k-means"></a>
+</h4>
+<ul>
+<li>Requires number of clusters to be known in advance</li>
+<li>Struggles when clusters have irregular shapes</li>
+<li>Will always produce an answer finding the required number of
+clusters even if the data isn’t clustered (or clustered in that many
+clusters)</li>
+<li>Requires linear cluster boundaries</li>
+</ul>
+<figure><img src="fig/clustering/kmeans_concentric_circle.png" alt="An example of kmeans failing on non-linear cluster boundaries" class="figure mx-auto d-block"><div class="figcaption">An example of kmeans failing on non-linear
+cluster boundaries</div>
+</figure>
+</div>
+<div class="section level4">
+<h4 id="advantages-of-k-means">Advantages of k-means<a class="anchor" aria-label="anchor" href="#advantages-of-k-means"></a>
+</h4>
+<ul>
+<li>Simple algorithm and fast to compute</li>
+<li>A good choice as the first thing to try when attempting to cluster
+data</li>
+<li>Suitable for large datasets due to its low memory and computing
+requirements</li>
+</ul>
+<div id="exercise-k-means-with-overlapping-clusters" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="exercise-k-means-with-overlapping-clusters" class="callout-inner">
+<h3 class="callout-title">Exercise: K-Means with overlapping
+clusters</h3>
+<div class="callout-content">
+<p>Adjust the program above to increase the standard deviation of the
+blobs (the cluster_std parameter to make_blobs) and increase the number
+of samples (n_samples) to 4000. You should start to see the clusters
+overlapping. Do the clusters that are identified make sense? Is there
+any strange behaviour?</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div class="accordion-body">
+<p>Increasing n_samples to 4000 and cluster_std to 3.0 looks like
+this:</p>
+<figure><img src="fig/clustering/kmeans_overlapping_clusters.png" alt="Kmeans attempting to classify overlapping clusters" class="figure mx-auto d-block"><div class="figcaption">Kmeans attempting to classify overlapping
+clusters</div>
+</figure><p>The straight line boundaries between clusters look a bit strange.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="exercise-how-many-clusters-should-we-look-for" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="exercise-how-many-clusters-should-we-look-for" class="callout-inner">
+<h3 class="callout-title">Exercise: How many clusters should we look
+for?</h3>
+<div class="callout-content">
+<p>Using k-means requires us to specify the number of clusters to
+expect. A common strategy to get around this is to vary the number of
+clusters we are looking for. Modify the program to loop through
+searching for between 2 and 10 clusters. Which (if any) of the results
+look more sensible? What criteria might you use to select the best
+one?</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
+</button>
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div class="accordion-body">
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="cf">for</span> cluster_count <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span>,<span class="dv">11</span>):</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>    Kmean <span class="op">=</span> skl_cluster.KMeans(n_clusters<span class="op">=</span>cluster_count)</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>    Kmean.fit(data)</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>    clusters <span class="op">=</span> Kmean.predict(data)</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>    plt.scatter(data[:, <span class="dv">0</span>], data[:, <span class="dv">1</span>], s<span class="op">=</span><span class="dv">5</span>, linewidth<span class="op">=</span><span class="dv">0</span>,c<span class="op">=</span>clusters)</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>    <span class="cf">for</span> cluster_x, cluster_y <span class="kw">in</span> Kmean.cluster_centers_:</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>        plt.scatter(cluster_x, cluster_y, s<span class="op">=</span><span class="dv">100</span>, c<span class="op">=</span><span class="st">'r'</span>, marker<span class="op">=</span><span class="st">'x'</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>        <span class="co"># give the graph a title with the number of clusters</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>        plt.title(<span class="bu">str</span>(cluster_count)<span class="op">+</span><span class="st">" Clusters"</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>    plt.show()</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>None of these look like very sensible clusterings because all of the
+points form one large cluster. We might look at a measure of similarity
+to test if this single cluster is actually multiple clusters. A simple
+standard deviation or interquartile range might be a good starting
+point.</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="spectral-clustering">Spectral clustering<a class="anchor" aria-label="anchor" href="#spectral-clustering"></a>
+</h3>
+<p>Spectral clustering is a technique that attempts to overcome the
+linear boundary problem of k-means clustering. It works by treating
+clustering as a graph partitioning problem and looks for nodes in a
+graph with a small distance between them. See <a href="https://www.cvl.isy.liu.se/education/graduate/spectral-clustering/SC_course_part1.pdf" class="external-link">this</a>
+introduction to spectral clustering if you are interested in more
+details about how spectral clustering works.</p>
+<p>Here is an example of spectral clustering on two concentric
+circles:</p>
+<figure><img src="fig/clustering/spectral_concentric_circle.png" alt="Spectral clustering on two concentric circles" class="figure mx-auto d-block"><div class="figcaption">Spectral clustering on two concentric
+circles</div>
+</figure><p>Spectral clustering uses something called a ‘kernel trick’ to
+introduce additional dimensions to the data. A common example of this is
+trying to cluster one circle within another (concentric circles). A
+k-means classifier will fail to do this and will end up effectively
+drawing a line which crosses the circles. However spectral clustering
+will introduce an additional dimension that effectively moves one of the
+circles away from the other in the additional dimension. This does have
+the downside of being more computationally expensive than k-means
+clustering.</p>
+<figure><img src="fig/clustering/spectral_concentric_3d.png" alt="Spectral clustering viewed with an extra dimension" class="figure mx-auto d-block"><div class="figcaption">Spectral clustering viewed with an extra
+dimension</div>
+</figure><div class="section level4">
+<h4 id="spectral-clustering-with-scikit-learn">Spectral clustering with Scikit-Learn<a class="anchor" aria-label="anchor" href="#spectral-clustering-with-scikit-learn"></a>
+</h4>
+<p>Lets try out using Scikit-Learn’s spectral clustering. To make the
+concentric circles in the above example we need to use the
+<code>make_circles</code> function in the sklearn.datasets module. This
+works in a very similar way to the make_blobs function we used earlier
+on.</p>
+<div class="codewrapper sourceCode" id="cb9">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="im">import</span> sklearn.datasets <span class="im">as</span> skl_data</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>circles, circles_clusters <span class="op">=</span> skl_data.make_circles(n_samples<span class="op">=</span><span class="dv">400</span>, noise<span class="op">=</span><span class="fl">.01</span>, random_state<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>plots_labels(circles, circles_clusters)</span></code></pre>
+</div>
+<p>The code for calculating the SpectralClustering is very similar to
+the kmeans clustering, but instead of using the sklearn.cluster.KMeans
+class we use the <code>sklearn.cluster.SpectralClustering</code>
+class.</p>
+<div class="codewrapper sourceCode" id="cb10">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>model <span class="op">=</span> skl_cluster.SpectralClustering(n_clusters<span class="op">=</span><span class="dv">2</span>, affinity<span class="op">=</span><span class="st">'nearest_neighbors'</span>, assign_labels<span class="op">=</span><span class="st">'kmeans'</span>)</span></code></pre>
+</div>
+<p>The SpectralClustering class combines the fit and predict functions
+into a single function called fit_predict.</p>
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>labels <span class="op">=</span> model.fit_predict(circles)</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>plots_labels(circles, labels)</span></code></pre>
+</div>
+<p>Here is the whole program combined with the kmeans clustering for
+comparison. Note that this produces two figures. To view both of them
+use the “Inline” graphics terminal inside the Python console instead of
+the “Automatic” method which will open a window and only show you one of
+the graphs.</p>
+<div class="codewrapper sourceCode" id="cb12">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="im">import</span> sklearn.cluster <span class="im">as</span> skl_cluster</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="im">import</span> sklearn.datasets <span class="im">as</span> skl_data</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>circles, circles_clusters <span class="op">=</span> skl_data.make_circles(n_samples<span class="op">=</span><span class="dv">400</span>, noise<span class="op">=</span><span class="fl">.01</span>, random_state<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="co"># cluster with kmeans</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>Kmean <span class="op">=</span> skl_cluster.KMeans(n_clusters<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>Kmean.fit(circles)</span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>clusters <span class="op">=</span> Kmean.predict(circles)</span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a><span class="co"># plot the data, colouring it by cluster</span></span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a>plot_clusters(circles, clusters, Kmean)</span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a><span class="co"># cluster with spectral clustering</span></span>
+<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a>model <span class="op">=</span> skl_cluster.SpectralClustering(n_clusters<span class="op">=</span><span class="dv">2</span>, affinity<span class="op">=</span><span class="st">'nearest_neighbors'</span>, assign_labels<span class="op">=</span><span class="st">'kmeans'</span>)</span>
+<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a>labels <span class="op">=</span> model.fit_predict(circles)</span>
+<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a>plots_labels(circles, labels)</span></code></pre>
+</div>
+<figure><img src="fig/clustering/kmeans_concentric_circle_2.png" alt="Kmeans attempting to cluster the concentric circles" class="figure mx-auto d-block"><div class="figcaption">Kmeans attempting to cluster the concentric
+circles</div>
+</figure><figure><img src="fig/clustering/spectral_concentric_circle_2.png" alt="Spectral clustering on the concentric circles" class="figure mx-auto d-block"><div class="figcaption">Spectral clustering on the concentric
+circles</div>
+</figure><div id="exercise-comparing-k-means-and-spectral-clustering-performance" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="exercise-comparing-k-means-and-spectral-clustering-performance" class="callout-inner">
+<h3 class="callout-title">Exercise: Comparing k-means and spectral
+clustering performance</h3>
+<div class="callout-content">
+<p>Modify the program we wrote in the previous exercise to use spectral
+clustering instead of k-means and save it as a new file. Time how long
+both programs take to run. Add the line <code>import time</code> at the
+top of both files as the first line, and get the start time with
+<code>start_time = time.time()</code>. End the program by getting the
+time again and subtracting the start time from it to get the total run
+time. Add <code>end_time = time.time()</code> and
+<code>print("Elapsed time:",end_time-start_time,"seconds")</code> to the
+end of both files.</p>
+<p>Compare how long both programs take to run generating 4,000 samples
+and testing them for between 2 and 10 clusters:</p>
+<ul>
+<li>How much did your run times differ?</li>
+<li>How much do they differ if you increase the number of samples to
+8,000?</li>
+<li>How long do you think it would take to compute 800,000 samples
+(estimate this, it might take a while to run for real)?</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
+  <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
+</button>
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div class="accordion-body">
+<p>KMeans version: runtime around 4 seconds (your computer might be
+faster/slower)</p>
+<div class="codewrapper sourceCode" id="cb13">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="im">import</span> sklearn.cluster <span class="im">as</span> skl_cluster</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_blobs </span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>start_time <span class="op">=</span> time.time()</span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>data, cluster_id <span class="op">=</span> make_blobs(n_samples<span class="op">=</span><span class="dv">4000</span>, cluster_std<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>                                       centers<span class="op">=</span><span class="dv">4</span>, random_state<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a><span class="cf">for</span> cluster_count <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span>,<span class="dv">11</span>):</span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a>    Kmean <span class="op">=</span> skl_cluster.KMeans(n_clusters<span class="op">=</span>cluster_count)</span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a>    Kmean.fit(data)</span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a>    clusters <span class="op">=</span> Kmean.predict(data)</span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a>    plt.scatter(data[:, <span class="dv">0</span>], data[:, <span class="dv">1</span>], s<span class="op">=</span><span class="dv">15</span>, linewidth<span class="op">=</span><span class="dv">0</span>, c<span class="op">=</span>clusters)</span>
+<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a>    plt.title(<span class="bu">str</span>(cluster_count)<span class="op">+</span><span class="st">" Clusters"</span>)</span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a>plt.show()</span>
+<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a>end_time <span class="op">=</span> time.time()</span>
+<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Elapsed time = "</span>, end_time<span class="op">-</span>start_time, <span class="st">"seconds"</span>)</span></code></pre>
+</div>
+<p>Spectral version: runtime around 9 seconds (your computer might be
+faster/slower)</p>
+<div class="codewrapper sourceCode" id="cb14">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="im">import</span> sklearn.cluster <span class="im">as</span> skl_cluster</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_blobs </span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>start_time <span class="op">=</span> time.time()</span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>data, cluster_id <span class="op">=</span> make_blobs(n_samples<span class="op">=</span><span class="dv">4000</span>, cluster_std<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a>                                       centers<span class="op">=</span><span class="dv">4</span>, random_state<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="cf">for</span> cluster_count <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span>,<span class="dv">11</span>):</span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a>    model <span class="op">=</span> skl_cluster.SpectralClustering(n_clusters<span class="op">=</span>cluster_count,</span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a>                                       affinity<span class="op">=</span><span class="st">'nearest_neighbors'</span>,</span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a>                                       assign_labels<span class="op">=</span><span class="st">'kmeans'</span>)</span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a>    labels <span class="op">=</span> model.fit_predict(data)</span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a>    </span>
+<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a>    plt.scatter(data[:, <span class="dv">0</span>], data[:, <span class="dv">1</span>], s<span class="op">=</span><span class="dv">15</span>, linewidth<span class="op">=</span><span class="dv">0</span>, c<span class="op">=</span>labels)</span>
+<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a>    plt.title(<span class="bu">str</span>(cluster_count)<span class="op">+</span><span class="st">" Clusters"</span>)</span>
+<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a>plt.show()</span>
+<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a>end_time <span class="op">=</span> time.time()</span>
+<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Elapsed time = "</span>, end_time<span class="op">-</span>start_time, <span class="st">"seconds"</span>)</span></code></pre>
+</div>
+<p>When the number of points increases to 8000 the runtimes are 24
+seconds for the spectral version and 5.6 seconds for kmeans. The runtime
+numbers will differ depending on the speed of your computer, but the
+relative difference should be similar. For 4000 points kmeans took 4
+seconds, while spectral took 9 seconds. A 2.25 fold difference. For 8000
+points kmeans took 5.6 seconds, while spectral took 24 seconds. A 4.28
+fold difference. Kmeans is 1.4 times slower for double the data, while
+spectral is 2.6 times slower. The realative difference is diverging. If
+we used 100 times more data we might expect a 100 fold divergence in
+execution times. Kmeans might take a few minutes while spectral will
+take hours.</p>
 </div>
 </div>
 </div>
@@ -2359,10 +2851,27 @@ any links that you are not going to use.
 <span class="callout-header">Key Points</span>
 <div class="callout-inner">
 <div class="callout-content">
-
+<ul>
+<li>Clustering is a form of unsupervised learning.</li>
+<li>Unsupervised learning algorithms don’t need training.</li>
+<li>Kmeans is a popular clustering algorithm.</li>
+<li>Kmeans is less useful when one cluster exists within another, such
+as concentric circles.</li>
+<li>Spectral clustering can overcome some of the limitations of
+Kmeans.</li>
+<li>Spectral clustering is much slower than Kmeans.</li>
+<li>Scikit-Learn has functions to create example data.</li>
+</ul>
 </div>
 </div>
-</div></section><section id="aio-06-dimensionality-reduction"><p>Content from <a href="06-dimensionality-reduction.html"></a></p>
+</div>
+<!--
+Place links that you need to refer to multiple times across pages here. Delete
+any links that you are not going to use.
+ -->
+</div>
+</div>
+</section></section><section id="aio-06-dimensionality-reduction"><p>Content from <a href="06-dimensionality-reduction.html">Unsupervised methods - Dimensionality reduction</a></p>
 <hr>
 <p>Last updated on 2025-12-05 |
 
@@ -2377,6 +2886,10 @@ any links that you are not going to use.
 <div class="card-body">
 <div class="inner">
 <h3 class="card-title">Questions</h3>
+<ul>
+<li>How do we apply machine learning techniques to data with higher
+dimensions?</li>
+</ul>
 </div>
 </div>
 </div>
@@ -2384,8 +2897,415 @@ any links that you are not going to use.
 <div class="card-body">
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
+<ul>
+<li>Recall that most data is inherently multidimensional.</li>
+<li>Understand that reducing the number of dimensions can simplify
+modelling and allow classifications to be performed.</li>
+<li>Apply Principle Component Analysis (PCA) and t-distributed
+Stochastic Neighbor Embedding (t-SNE) to reduce the dimensions of
+data.</li>
+<li>Evaluate the relative peformance of PCA and t-SNE in reducing data
+dimensionality.</li>
+</ul>
 </div>
 </div>
+</div>
+</div>
+</div>
+<section><h2 class="section-heading" id="dimensionality-reduction">Dimensionality reduction<a class="anchor" aria-label="anchor" href="#dimensionality-reduction"></a>
+</h2>
+<hr class="half-width">
+<p>As seen in the last episode, general clustering algorithms work well
+with low-dimensional data. In this episode we see how higher-dimensional
+data, such as images of handwritten text or numbers, can be processed
+with dimensionality reduction techniques to make the datasets more
+accessible for other modelling techniques. The dataset we will be using
+is the Scikit-Learn subset of the Modified National Institute of
+Standards and Technology (MNIST) dataset.</p>
+<figure><img src="fig/dimensionality-reduction/MnistExamples.png" alt="MNIST example illustrating all the classes in the dataset" class="figure mx-auto d-block"><div class="figcaption">MNIST example illustrating all the classes in
+the dataset</div>
+</figure><p>The MNIST dataset contains 70,000 images of handwritten numbers, and
+are labelled from 0-9 with the number that each image contains. Each
+image is a greyscale and 28x28 pixels in size for a total of 784 pixels
+per image. Each pixel can take a value between 0-255 (8bits). When
+dealing with a series of images in machine learning we consider each
+pixel to be a feature that varies according to each of the sample
+images. Our previous penguin dataset only had no more than 7 features to
+train with, however even a small 28x28 MNIST image has as much as 784
+features (pixels) to work with.</p>
+<figure><img src="fig/dimensionality-reduction/mnist_30000-letter.png" alt="MNIST example of a single image" class="figure mx-auto d-block"><div class="figcaption">MNIST example of a single image</div>
+</figure><p>To make this episode a bit less computationally intensive, the
+Scikit-Learn example that we will work with is a smaller sample of 1797
+images. Each image is 8x8 in size for a total of 64 pixels per image,
+resulting in 64 features for us to work with. The pixels can take a
+value between 0-15 (4bits). Let’s retrieve and inspect the Scikit-Learn
+dataset with the following code:</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="im">import</span> sklearn.cluster <span class="im">as</span> skl_cluster</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> manifold, decomposition, datasets</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co"># Let's define these here to avoid repetitive code</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="kw">def</span> plots_labels(data, labels):</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>    tx <span class="op">=</span> data[:, <span class="dv">0</span>]</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>    ty <span class="op">=</span> data[:, <span class="dv">1</span>]</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>    </span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>    fig <span class="op">=</span> plt.figure(<span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">4</span>))</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>    plt.scatter(tx, ty, edgecolor<span class="op">=</span><span class="st">'k'</span>, c<span class="op">=</span>labels)</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>    plt.show()</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="kw">def</span> plot_clusters(data, clusters, Kmean):</span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>    tx <span class="op">=</span> data[:, <span class="dv">0</span>]</span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>    ty <span class="op">=</span> data[:, <span class="dv">1</span>]</span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a>    fig <span class="op">=</span> plt.figure(<span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">4</span>))</span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a>    plt.scatter(tx, ty, s<span class="op">=</span><span class="dv">5</span>, linewidth<span class="op">=</span><span class="dv">0</span>, c<span class="op">=</span>clusters)</span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a>    <span class="cf">for</span> cluster_x, cluster_y <span class="kw">in</span> Kmean.cluster_centers_:</span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a>        plt.scatter(cluster_x, cluster_y, s<span class="op">=</span><span class="dv">100</span>, c<span class="op">=</span><span class="st">'r'</span>, marker<span class="op">=</span><span class="st">'x'</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a>    plt.show()</span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a><span class="kw">def</span> plot_clusters_labels(data, labels):</span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a>    tx <span class="op">=</span> data[:, <span class="dv">0</span>]</span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a>    ty <span class="op">=</span> data[:, <span class="dv">1</span>]</span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a>    <span class="co"># with labels</span></span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a>    fig <span class="op">=</span> plt.figure(<span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">4</span>))</span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a>    plt.scatter(tx, ty, c<span class="op">=</span>labels, cmap<span class="op">=</span><span class="st">"nipy_spectral"</span>, </span>
+<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a>            edgecolor<span class="op">=</span><span class="st">'k'</span>, label<span class="op">=</span>labels)</span>
+<span id="cb1-32"><a href="#cb1-32" tabindex="-1"></a>    plt.colorbar(boundaries<span class="op">=</span>np.arange(<span class="dv">11</span>)<span class="op">-</span><span class="fl">0.5</span>).set_ticks(np.arange(<span class="dv">10</span>))</span>
+<span id="cb1-33"><a href="#cb1-33" tabindex="-1"></a>    plt.show()</span></code></pre>
+</div>
+<p>Next, lets load in the digits dataset:</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># load in dataset as a Pandas Dataframe, return X and Y</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>features, labels <span class="op">=</span> datasets.load_digits(return_X_y<span class="op">=</span><span class="va">True</span>, as_frame<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="bu">print</span>(features.shape, labels.shape)</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="bu">print</span>(labels)</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>features.head()</span></code></pre>
+</div>
+</section><section><h2 class="section-heading" id="our-goal-using-dimensionality-reduction-to-help-with-machine-learning">Our goal: using dimensionality-reduction to help with machine
+learning<a class="anchor" aria-label="anchor" href="#our-goal-using-dimensionality-reduction-to-help-with-machine-learning"></a>
+</h2>
+<hr class="half-width">
+<p>As humans we are pretty good at object and pattern recognition. We
+can look at the images above, inspect the intensity and position pixels
+relative to other pixels, and pretty quickly make an accurate guess at
+what the image shows. As humans we spends much of our younger lives
+learning these spatial relations, and so it stands to reason that
+computers can also extract these relations. Let’s see if it is possible
+to use unsupervised clustering techniques to pull out relations in our
+MNIST dataset of number images.</p>
+<div id="exercise-try-to-visually-inspect-the-dataset-and-features-for-correlations" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<span class="callout-header">Discussion</span>
+<div id="exercise-try-to-visually-inspect-the-dataset-and-features-for-correlations" class="callout-inner">
+<h3 class="callout-title">Exercise: Try to visually inspect the dataset
+and features for correlations</h3>
+<div class="callout-content">
+<p>As we did for previous datasets, lets visually inspect relationships
+between our features/pixels. Try and investigate the following pixels
+for relations (written “row_column”): 0_4, 1_4, 2_4, and 3_4.</p>
+<div class="solutuion">
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="bu">print</span>(features.iloc[<span class="dv">0</span>])</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>image_1D <span class="op">=</span> features.iloc[<span class="dv">0</span>]</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>image_2D <span class="op">=</span> np.array(image_1D).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">8</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>plt.imshow(image_2D,cmap<span class="op">=</span><span class="st">"gray_r"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co"># these points are the pixels we will investigate</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co"># pixels 0,1,2,3 of row 4 of the image</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>plt.plot([<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>],[<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">4</span>],<span class="st">"rx"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>plt.show()</span></code></pre>
+</div>
+<figure><img src="fig/dimensionality-reduction/mnist_pairplot_pixels.png" alt="SKLearn image with highlighted pixels" class="figure mx-auto d-block"><div class="figcaption">SKLearn image with highlighted pixels</div>
+</figure><div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co"># make a temporary copy of data for plotting here only</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>seaborn_data <span class="op">=</span> features</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co"># add labels for pairplot color coding</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>seaborn_data[<span class="st">"labels"</span>] <span class="op">=</span> labels</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co"># make a short list of N features for plotting N*N figures</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co"># 4**2 = 16 plots, whereas 64**2 is over 4000!</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>feature_subset <span class="op">=</span> []</span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4</span>):</span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>    feature_subset.append(<span class="st">"pixel_"</span><span class="op">+</span><span class="bu">str</span>(i)<span class="op">+</span><span class="st">"_4"</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>sns.pairplot(seaborn_data, <span class="bu">vars</span><span class="op">=</span>feature_subset, hue<span class="op">=</span><span class="st">"labels"</span>, </span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a>             palette<span class="op">=</span>sns.mpl_palette(<span class="st">"Spectral"</span>, n_colors<span class="op">=</span><span class="dv">10</span>))</span></code></pre>
+</div>
+<figure><img src="fig/dimensionality-reduction/mnist_pairplot.png" alt="SKLearn image with highlighted pixels" class="figure mx-auto d-block"><div class="figcaption">SKLearn image with highlighted pixels</div>
+</figure><p>As we can see the dataset relations are far more complex than our
+previous examples. The histograms show that some numbers appear in those
+pixel positions more than others, but the
+<code>feature_vs_feature</code> plots are quite messy to try and
+decipher. There are gaps and patches of colour suggesting that there is
+some kind of structure there, but it’s far harder to inspect than the
+penguin data. We can’t easily see definitive clusters in our 2D
+representations, and we know our clustering algorithms will take a long
+time to try and crunch 64 dimensions at once, so let’s see if we can
+represent our 64D data in fewer dimensions.</p>
+</div>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="dimensionality-reduction-with-scikit-learn">Dimensionality reduction with Scikit-Learn<a class="anchor" aria-label="anchor" href="#dimensionality-reduction-with-scikit-learn"></a>
+</h2>
+<hr class="half-width">
+<p>We will look at two commonly used techniques for dimensionality
+reduction: Principal Component Analysis (PCA) and t-distributed
+Stochastic Neighbor Embedding (t-SNE). Both of these techniques are
+supported by Scikit-Learn.</p>
+<div class="section level3">
+<h3 id="principal-component-analysis-pca">Principal Component Analysis (PCA)<a class="anchor" aria-label="anchor" href="#principal-component-analysis-pca"></a>
+</h3>
+<p>PCA allows us to replace our 64 features with a smaller number of
+dimensional representations that retain the majority of our
+variance/relational data. Using Scikit-Learn lets apply PCA in a
+relatively simple way.</p>
+<p>For more in depth explanations of PCA please see the following
+links:</p>
+<ul>
+<li><a href="https://builtin.com/data-science/step-step-explanation-principal-component-analysis" class="external-link">https://builtin.com/data-science/step-step-explanation-principal-component-analysis</a></li>
+<li><a href="https://scikit-learn.org/stable/modules/decomposition.html#pca" class="external-link">https://scikit-learn.org/stable/modules/decomposition.html#pca</a></li>
+</ul>
+<p>Let’s apply PCA to the MNIST dataset and retain the two most-major
+components:</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># PCA with 2 components</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>pca <span class="op">=</span> decomposition.PCA(n_components<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>x_pca <span class="op">=</span> pca.fit_transform(features)</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="bu">print</span>(x_pca.shape)</span></code></pre>
+</div>
+<p>This returns us an array of 1797x2 where the 2 remaining columns(our
+new “features” or “dimensions”) contain vector representations of the
+first principle components (column 0) and second principle components
+(column 1) for each of the images. We can plot these two new features
+against each other:</p>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># We are passing None because it is an unlabelled plot</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>plots_labels(x_pca, <span class="va">None</span>)</span></code></pre>
+</div>
+<figure><img src="fig/dimensionality-reduction/pca_unlabelled.png" alt="Reduction using PCA" class="figure mx-auto d-block"><div class="figcaption">Reduction using PCA</div>
+</figure><p>We now have a 2D representation of our 64D dataset that we can work
+with instead. Let’s try some quick K-means clustering on our 2D
+representation of the data. Because we already have some knowledge about
+our data we can set <code>k=10</code> for the 10 digits present in the
+dataset.</p>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>Kmean <span class="op">=</span> skl_cluster.KMeans(n_clusters<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>Kmean.fit(x_pca)</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>clusters <span class="op">=</span> Kmean.predict(x_pca)</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>plot_clusters(x_pca, clusters, Kmean)</span></code></pre>
+</div>
+<figure><img src="fig/dimensionality-reduction/pca_clustered.png" alt="Reduction using PCA, with K-means clustering" class="figure mx-auto d-block"><div class="figcaption">Reduction using PCA, with K-means
+clustering</div>
+</figure><p>And now we can compare how these clusters look against our actual
+image labels by colour coding our first scatter plot:</p>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>plot_clusters_labels(x_pca, labels)</span></code></pre>
+</div>
+<figure><img src="fig/dimensionality-reduction/pca_labelled.png" alt="Reduction using PCA, adding colour labelling" class="figure mx-auto d-block"><div class="figcaption">Reduction using PCA, adding colour
+labelling</div>
+</figure><p>PCA has done a valiant effort to reduce the dimensionality of our
+problem from 64D to 2D while still retaining some of our key structural
+information. We can see that the digits
+<code>0</code>,<code>1</code>,<code>4</code>, and <code>6</code> cluster
+up reasonably well even using a simple k-means test. However it does
+look like there is still quite a bit of overlap between the remaining
+digits, especially for the digits <code>5</code> and <code>8</code>. The
+clustering is from perfect in the largest “blob”, but not a bad effort
+from PCA given the substantial dimensionality reduction.</p>
+<p>It’s worth noting that PCA does not handle outlier data well
+primarily due to global preservation of structural information, and so
+we will now look at a more complex form of learning that we can apply to
+this problem.</p>
+</div>
+<div class="section level3">
+<h3 id="t-distributed-stochastic-neighbor-embedding-t-sne">t-distributed Stochastic Neighbor Embedding (t-SNE)<a class="anchor" aria-label="anchor" href="#t-distributed-stochastic-neighbor-embedding-t-sne"></a>
+</h3>
+<p>t-SNE is a powerful example of manifold learning - a
+non-deterministic non-linear approach to dimensionality reduction.
+Manifold learning tasks are based on the idea that the dimension of many
+datasets is artificially high. This is likely the case for our MNIST
+dataset, as the corner pixels of our images are unlikely to contain
+digit data, and thus those dimensions are almost negligable compared
+with others.</p>
+<p>The versatility of the algorithm in transforming the underlying
+structural information into lower-order projections makes t-SNE
+applicable to a wide range of research domains.</p>
+<p>For more in depth explanations of t-SNE and manifold learning please
+see the following links which also contain som very nice visual examples
+of manifold learning in action:</p>
+<ul>
+<li><a href="https://thedatafrog.com/en/articles/visualizing-datasets/" class="external-link">https://thedatafrog.com/en/articles/visualizing-datasets/</a></li>
+<li><a href="https://scikit-learn.org/stable/modules/manifold.html" class="external-link">https://scikit-learn.org/stable/modules/manifold.html</a></li>
+</ul>
+<p>Scikit-Learn allows us to apply t-SNE in a relatively simple way.
+Lets code and apply t-SNE to the MNIST dataset in the same manner that
+we did for the PCA example, and reduce the data down from 64D to 2D
+again:</p>
+<div class="codewrapper sourceCode" id="cb9">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># t-SNE embedding</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="co"># initialising with "pca" explicitly preserves global structure</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>tsne <span class="op">=</span> manifold.TSNE(n_components<span class="op">=</span><span class="dv">2</span>, init<span class="op">=</span><span class="st">'pca'</span>, random_state <span class="op">=</span> <span class="dv">0</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>x_tsne <span class="op">=</span> tsne.fit_transform(features)</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>plots_labels(x_tsne, <span class="va">None</span>)</span></code></pre>
+</div>
+<figure><img src="fig/dimensionality-reduction/tsne_unlabelled.png" alt="Reduction using PCA, applying t-SNE to the MNIST data" class="figure mx-auto d-block"><div class="figcaption">Reduction using PCA, applying t-SNE to the MNIST
+data</div>
+</figure><p>It looks like t-SNE has done a much better job of splitting our data
+up into clusters using only a 2D representation of the data. Once again,
+let’s run a simple k-means clustering on this new 2D representation, and
+compare with the actual color-labelled data:</p>
+<div class="codewrapper sourceCode" id="cb10">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>Kmean <span class="op">=</span> skl_cluster.KMeans(n_clusters<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>Kmean.fit(x_tsne)</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>clusters <span class="op">=</span> Kmean.predict(x_tsne)</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>plot_clusters(x_tsne, clusters, Kmean)</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>plot_clusters_labels(x_tsne, labels)</span></code></pre>
+</div>
+<figure><img src="fig/dimensionality-reduction/tsne_clustered.png" alt="Reduction using PCA, running K-means clustering on new 2D representation" class="figure mx-auto d-block"><div class="figcaption">Reduction using PCA, running K-means clustering
+on new 2D representation</div>
+</figure><figure><img src="fig/dimensionality-reduction/tsne_labelled.png" alt="Reduction using PCA, adding in colour labelling" class="figure mx-auto d-block"><div class="figcaption">Reduction using PCA, adding in colour
+labelling</div>
+</figure><p>It looks like t-SNE has successfully separated out our digits into
+accurate clusters using as little as a 2D representation and a simple
+k-means clustering algorithm. It has worked so well that you can clearly
+see several clusters which can be modelled, whereas for our PCA
+representation we needed to rely heavily on the knowledge that we had 10
+types of digits to cluster.</p>
+<p>Additionally, if we had run k-means on all 64 dimensions this would
+likely still be computing away, whereas we have already broken down our
+dataset into accurate clusters, with only a handful of outliers and
+potential misidentifications (remember, a good ML model isn’t a perfect
+model!)</p>
+<p>The major drawback of applying t-SNE to datasets is the large
+computational requirement. Furthermore, hyper-parameter tuning of t-SNE
+usually requires some trial and error to perfect.</p>
+<p>Our example here is still a relatively simple example of 8x8 images
+and not very typical of the modern problems that can now be solved in
+the field of ML and DL. To account for even higher-order input data,
+neural networks were developed to more accurately extract feature
+information.</p>
+<div id="exercise-working-in-three-dimensions" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="exercise-working-in-three-dimensions" class="callout-inner">
+<h3 class="callout-title">Exercise: Working in three dimensions</h3>
+<div class="callout-content">
+<p>The above example has considered only two dimensions since humans can
+visualize two dimensions very well. However, there can be cases where a
+dataset requires more than two dimensions to be appropriately
+decomposed. Modify the above programs to use three dimensions and create
+appropriate plots.</p>
+<p>Do three dimensions allow one to better distinguish between the
+digits?</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div class="accordion-body">
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="co"># PCA</span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>pca <span class="op">=</span> decomposition.PCA(n_components<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>pca.fit(features)</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>x_pca <span class="op">=</span> pca.transform(features)</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(<span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">4</span>))</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>ax <span class="op">=</span> fig.add_subplot(projection<span class="op">=</span><span class="st">'3d'</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>ax.scatter(x_pca[:, <span class="dv">0</span>], x_pca[:, <span class="dv">1</span>], x_pca[:, <span class="dv">2</span>], c<span class="op">=</span>labels,</span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>          cmap<span class="op">=</span>plt.cm.nipy_spectral, s<span class="op">=</span><span class="dv">9</span>, lw<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>plt.show()</span></code></pre>
+</div>
+<figure><img src="fig/dimensionality-reduction/pca_3d.svg" alt="Reduction to 3 components using pca" class="figure mx-auto d-block"><div class="figcaption">Reduction to 3 components using pca</div>
+</figure><div class="codewrapper sourceCode" id="cb12">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co"># t-SNE embedding</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>tsne <span class="op">=</span> manifold.TSNE(n_components<span class="op">=</span><span class="dv">3</span>, init<span class="op">=</span><span class="st">'pca'</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>        random_state <span class="op">=</span> <span class="dv">0</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>x_tsne <span class="op">=</span> tsne.fit_transform(features)</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(<span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">4</span>))</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>ax <span class="op">=</span> fig.add_subplot(projection<span class="op">=</span><span class="st">'3d'</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>ax.scatter(x_tsne[:, <span class="dv">0</span>], x_tsne[:, <span class="dv">1</span>], x_tsne[:, <span class="dv">2</span>], c<span class="op">=</span>labels,</span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>          cmap<span class="op">=</span>plt.cm.nipy_spectral, s<span class="op">=</span><span class="dv">9</span>, lw<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>plt.show()</span></code></pre>
+</div>
+<figure><img src="fig/dimensionality-reduction/tsne_3d.svg" alt="Reduction to 3 components using tsne" class="figure mx-auto d-block"><div class="figcaption">Reduction to 3 components using tsne</div>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="exercise-parameters" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<span class="callout-header">Discussion</span>
+<div id="exercise-parameters" class="callout-inner">
+<h3 class="callout-title">Exercise: Parameters</h3>
+<div class="callout-content">
+<p>Look up parameters that can be changed in PCA and t-SNE, and
+experiment with these. How do they change your resulting plots? Might
+the choice of parameters lead you to make different conclusions about
+your data?</p>
+</div>
+</div>
+</div>
+<div id="exercise-other-algorithms" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<span class="callout-header">Discussion</span>
+<div id="exercise-other-algorithms" class="callout-inner">
+<h3 class="callout-title">Exercise: Other algorithms</h3>
+<div class="callout-content">
+<p>There are other algorithms that can be used for doing dimensionality
+reduction (for example the Higher Order Singular Value Decomposition
+(HOSVD)). Do an internet search for some of these and examine the
+example data that they are used on. Are there cases where they do
+poorly? What level of care might you need to use before applying such
+methods for automation in critical scenarios? What about for interactive
+data exploration?</p>
 </div>
 </div>
 </div>
@@ -2396,10 +3316,21 @@ any links that you are not going to use.
 <span class="callout-header">Key Points</span>
 <div class="callout-inner">
 <div class="callout-content">
-
+<ul>
+<li>PCA is a linear dimensionality reduction technique for tabular
+data</li>
+<li>t-SNE is another dimensionality reduction technique for tabular data
+that is more general than PCA</li>
+</ul>
 </div>
 </div>
-</div></section><section id="aio-07-neural-networks"><p>Content from <a href="07-neural-networks.html"></a></p>
+</div>
+<!--
+Place links that you need to refer to multiple times across pages here. Delete
+any links that you are not going to use.
+ -->
+</div>
+</section></section><section id="aio-07-neural-networks"><p>Content from <a href="07-neural-networks.html">Neural Networks</a></p>
 <hr>
 <p>Last updated on 2025-12-05 |
 
@@ -2414,6 +3345,10 @@ any links that you are not going to use.
 <div class="card-body">
 <div class="inner">
 <h3 class="card-title">Questions</h3>
+<ul>
+<li>What are Neural Networks?</li>
+<li>How can we classify images using a neural network?</li>
+</ul>
 </div>
 </div>
 </div>
@@ -2421,8 +3356,744 @@ any links that you are not going to use.
 <div class="card-body">
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
+<ul>
+<li>Understand the basic architecture of a perceptron.</li>
+<li>Be able to create a perceptron to encode a simple function.</li>
+<li>Understand that layers of perceptrons allow non-linear separable
+problems to be solved.</li>
+<li>Train a multi-layer perceptron using Scikit-Learn.</li>
+<li>Evaluate the accuracy of a multi-layer perceptron using real input
+data.</li>
+<li>Understand that cross validation allows the entire data set to be
+used in the training process.</li>
+</ul>
 </div>
 </div>
+</div>
+</div>
+</div>
+<section><h2 class="section-heading" id="neural-networks">Neural networks<a class="anchor" aria-label="anchor" href="#neural-networks"></a>
+</h2>
+<hr class="half-width">
+<p>Neural networks are a machine learning method inspired by how the
+human brain works. They are particularly good at pattern recognition and
+classification tasks, often using images as inputs. They are a
+well-established machine learning technique, having been around since
+the 1950s, but they’ve gone through several iterations to overcome
+limitations in previous generations. Using state-of-the-art neural
+networks is often referred to as ‘deep learning’.</p>
+</section><section><h2 class="section-heading" id="perceptrons">Perceptrons<a class="anchor" aria-label="anchor" href="#perceptrons"></a>
+</h2>
+<hr class="half-width">
+<p>Perceptrons are the building blocks of neural networks. They are an
+artificial version of a single neuron in the brain. They typically have
+one or more inputs and a single output. Each input will be multiplied by
+a weight and the value of all the weighted inputs are then summed
+together. Finally, the summed value is put through an activation
+function which decides if the neuron “fires” a signal. In some cases,
+this activation function is simply a threshold step function which
+outputs zero below a certain input and one above it. Other designs of
+neurons use other activation functions, but typically they have an
+output between zero and one and are still step-like in their nature.</p>
+<figure><img src="fig/neural-networks/perceptron.svg" alt="A diagram of a perceptron" class="figure mx-auto d-block"><div class="figcaption">A diagram of a perceptron</div>
+</figure><div class="section level3">
+<h3 id="coding-a-perceptron">Coding a perceptron<a class="anchor" aria-label="anchor" href="#coding-a-perceptron"></a>
+</h3>
+<p>Below is an example of a perceptron written as a Python function. The
+function takes three parameters: <code>Inputs</code> is a list of input
+values, <code>Weights</code> is a list of weight values and
+<code>Threshold</code> is the activation threshold.</p>
+<p>First we multiply each input by the corresponding weight. To do this
+quickly and concisely, we will use the numpy multiply function which can
+multiply each item in a list by a corresponding item in another
+list.</p>
+<p>We then take the sum of all the inputs multiplied by their weights.
+Finally, if this value is less than the activation threshold, we output
+zero, otherwise we output a one.</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="kw">def</span> perceptron(inputs, weights, threshold):</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">len</span>(inputs) <span class="op">==</span> <span class="bu">len</span>(weights)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>    <span class="co"># multiply the inputs and weights</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>    values <span class="op">=</span> np.multiply(inputs,weights)</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>    <span class="co"># sum the results</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>    total <span class="op">=</span> <span class="bu">sum</span>(values)</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>    <span class="co"># decide if we should activate the perceptron</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>    <span class="cf">if</span> total <span class="op">&lt;</span> threshold:</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">0</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span></span></code></pre>
+</div>
+</div>
+<div class="section level3">
+<h3 id="computing-with-a-perceptron">Computing with a perceptron<a class="anchor" aria-label="anchor" href="#computing-with-a-perceptron"></a>
+</h3>
+<p>A single perceptron can perform basic linear classification problems
+such as computing the logical AND, OR, and NOT functions. We can get a
+single perceptron to compute each of these functions</p>
+<div class="section level4">
+<h4 id="or">OR<a class="anchor" aria-label="anchor" href="#or"></a>
+</h4>
+<table class="table">
+<thead><tr class="header">
+<th>Input 1</th>
+<th>Input 2</th>
+<th>Output</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>inputs <span class="op">=</span> [[<span class="fl">0.0</span>,<span class="fl">0.0</span>],[<span class="fl">1.0</span>,<span class="fl">0.0</span>],[<span class="fl">0.0</span>,<span class="fl">1.0</span>],[<span class="fl">1.0</span>,<span class="fl">1.0</span>]]</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="cf">for</span> <span class="bu">input</span> <span class="kw">in</span> inputs:</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>    <span class="bu">print</span>(<span class="bu">input</span>,perceptron(<span class="bu">input</span>, [<span class="fl">0.5</span>,<span class="fl">0.5</span>], <span class="fl">0.5</span>))</span></code></pre>
+</div>
+</div>
+<div class="section level4">
+<h4 id="and">AND<a class="anchor" aria-label="anchor" href="#and"></a>
+</h4>
+<table class="table">
+<thead><tr class="header">
+<th>Input 1</th>
+<th>Input 2</th>
+<th>Output</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>inputs <span class="op">=</span> [[<span class="fl">0.0</span>,<span class="fl">0.0</span>],[<span class="fl">1.0</span>,<span class="fl">0.0</span>],[<span class="fl">0.0</span>,<span class="fl">1.0</span>],[<span class="fl">1.0</span>,<span class="fl">1.0</span>]]</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="cf">for</span> <span class="bu">input</span> <span class="kw">in</span> inputs:</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>    <span class="bu">print</span>(<span class="bu">input</span>,perceptron(<span class="bu">input</span>, [<span class="fl">0.5</span>,<span class="fl">0.5</span>], <span class="fl">1.0</span>))</span></code></pre>
+</div>
+</div>
+<div class="section level4">
+<h4 id="not">NOT<a class="anchor" aria-label="anchor" href="#not"></a>
+</h4>
+<table class="table">
+<thead><tr class="header">
+<th>Input 1</th>
+<th>Output</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>The NOT function only has a single input. To make it work in the
+perceptron we need to introduce a bias term which is always the same
+value. In this example it is the second input. It has a weight of 1.0
+while the weight on the real input is -1.0.</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>inputs <span class="op">=</span> [[<span class="fl">0.0</span>,<span class="fl">1.0</span>],[<span class="fl">1.0</span>,<span class="fl">1.0</span>]]</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="cf">for</span> <span class="bu">input</span> <span class="kw">in</span> inputs:</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>    <span class="bu">print</span>(<span class="bu">input</span>,perceptron(<span class="bu">input</span>, [<span class="op">-</span><span class="fl">1.0</span>,<span class="fl">1.0</span>], <span class="fl">1.0</span>))</span></code></pre>
+</div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="the-perceptron-learning-algorithm">The perceptron learning algorithm<a class="anchor" aria-label="anchor" href="#the-perceptron-learning-algorithm"></a>
+</h3>
+<p>A perceptron can be trained to compute any function which has linear
+separability. A simple training algorithm called the perceptron learning
+algorithm can be used to do this and Scikit-Learn has its own
+implementation of it. We are going to skip over the perceptron learning
+algorithm and move straight onto more powerful techniques. If you want
+to learn more about it see <a href="https://computing.dcu.ie/~humphrys/Notes/Neural/single.neural.html" class="external-link">this
+page</a> from Dublin City University.</p>
+</div>
+<div class="section level3">
+<h3 id="perceptron-limitations">Perceptron limitations<a class="anchor" aria-label="anchor" href="#perceptron-limitations"></a>
+</h3>
+<p>A single perceptron cannot solve any function that is not linearly
+separable, meaning that we need to be able to divide the classes of
+inputs and outputs with a straight line. A common example of this is the
+XOR function shown below:</p>
+<table class="table">
+<thead><tr class="header">
+<th>Input 1</th>
+<th>Input 2</th>
+<th>Output</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>FIXME (from material): Make a graph of this</p>
+<p>This function outputs a zero when all its inputs are one or zero and
+its not possible to separate with a straight line. This is known as
+linear separability. When this limitation was discovered in the 1960s it
+effectively halted development of neural networks for over a decade in a
+period known as the “AI Winter”.</p>
+</div>
+</section><section><h2 class="section-heading" id="multi-layer-perceptrons">Multi-layer perceptrons<a class="anchor" aria-label="anchor" href="#multi-layer-perceptrons"></a>
+</h2>
+<hr class="half-width">
+<p>A single perceptron cannot be used to solve a non-linearly separable
+function. For that, we need to use multiple perceptrons and typically
+multiple layers of perceptrons. They are formed of networks of
+artificial neurons which each take one or more inputs and typically have
+a single output. The neurons are connected together in networks of 10s
+to 1000s of neurons. Typically, networks are connected in layers with an
+input layer, middle or hidden layer (or layers), and finally an output
+layer.</p>
+<figure><img src="fig/neural-networks/multilayer_perceptron.svg" alt="A multi-layer perceptron" class="figure mx-auto d-block"><div class="figcaption">A multi-layer perceptron</div>
+</figure><div class="section level3">
+<h3 id="training-multi-layer-perceptrons">Training multi-layer perceptrons<a class="anchor" aria-label="anchor" href="#training-multi-layer-perceptrons"></a>
+</h3>
+<p>Multi-layer perceptrons need to be trained by showing them a set of
+training data and measuring the error between the network’s predicted
+output and the true value. Training takes an iterative approach that
+improves the network a little each time a new training example is
+presented. There are a number of training algorithms available for a
+neural network today, but we are going to use one of the best
+established and well known, the backpropagation algorithm. This
+algorithm is called back propagation because it takes the error
+calculated between an output of the network and the true value and takes
+it back through the network to update the weights. If you want to read
+more about back propagation, please see <a href="http://page.mi.fu-berlin.de/rojas/neural/chapter/K7.pdf" class="external-link">this
+chapter</a> from the book “Neural Networks - A Systematic
+Introduction”.</p>
+</div>
+<div class="section level3">
+<h3 id="multi-layer-perceptrons-in-scikit-learn">Multi-layer perceptrons in Scikit-Learn<a class="anchor" aria-label="anchor" href="#multi-layer-perceptrons-in-scikit-learn"></a>
+</h3>
+<p>We are going to build a multi-layer perceptron for recognising
+handwriting from images. Scikit-Learn includes some example handwriting
+data from the <a href="http://yann.lecun.com/exdb/mnist/" class="external-link">MNIST data
+set</a>, which is a dataset containing 70,000 images of hand-written
+digits. Each image is 28x28 pixels in size (784 pixels in total) and is
+represented in grayscale with values between zero for fully black and
+255 for fully white. This means we will need 784 perceptrons in our
+input layer, each taking the input of one pixel and 10 perceptrons in
+our output layer to represent each digit we might classify. If trained
+correctly, only the perceptron in the output layer will “fire” to
+represent the contents of the image (but this is a massive
+oversimplification!).</p>
+<p>We can import this dataset from <code>sklearn.datasets</code> then
+load it into memory by calling the <code>fetch_openml</code>
+function.</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="im">import</span> sklearn.datasets <span class="im">as</span> skl_data</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>data, labels <span class="op">=</span> skl_data.fetch_openml(<span class="st">'mnist_784'</span>, version<span class="op">=</span><span class="dv">1</span>, return_X_y<span class="op">=</span><span class="va">True</span>)</span></code></pre>
+</div>
+<p>This creates two arrays of data, one called <code>data</code> which
+contains the image data and the other <code>labels</code> that contains
+the labels for those images which will tell us which digit is in the
+image. A common convention is to call the data <code>X</code> and the
+labels <code>y</code>.</p>
+<p>As neural networks typically want to work with data that ranges
+between 0 and 1.0 we need to normalise our data to this range. Python
+has a shortcut which lets us divide the entire data array by 255 and
+store the result, we can simply do:</p>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>data <span class="op">=</span> data <span class="op">/</span> <span class="fl">255.0</span></span></code></pre>
+</div>
+<p>This is instead of writing a loop ourselves to divide every pixel by
+255. Although the final result is the same and will take about the same
+amount of computation (possibly a little less, it might do some clever
+optimisations).</p>
+<p>Now we need to initialise a neural network. Scikit-Learn has an
+entire library for this (<code>sklearn.neural_network</code>) and the
+<code>MLPClassifier</code> class handles multi-layer perceptrons. This
+network takes a few parameters including the size of the hidden layer,
+the maximum number of training iterations we’re going to allow, the
+exact algorithm to use, whether or not we’d like verbose output about
+what the training is doing, and the initial state of the random number
+generator.</p>
+<p>In this example we specify a multi-layer perceptron with 50 hidden
+nodes, we allow a maximum of 50 iterations to train it, we turn on
+verbose output to see what’s happening, and initialise the random state
+to 1 so that we always get the same behaviour.</p>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="im">import</span> sklearn.neural_network <span class="im">as</span> skl_nn</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>mlp <span class="op">=</span> skl_nn.MLPClassifier(hidden_layer_sizes<span class="op">=</span>(<span class="dv">50</span>,), max_iter<span class="op">=</span><span class="dv">50</span>, verbose<span class="op">=</span><span class="dv">1</span>, random_state<span class="op">=</span><span class="dv">1</span>)</span></code></pre>
+</div>
+<p>We now have a neural network but we have not trained it yet. Before
+training, we will split our dataset into two parts: a training set which
+we will use to train the classifier and a test set which we will use to
+see how well the training is working. By using different data for the
+two, we can avoid ‘over-fitting’, which is the creation of models which
+do not “generalise” or work with data other than their training
+data.</p>
+<p>Typically, the majority of the data will be used as training data
+(70-90%), to help avoid overfitting. Let us see how big our dataset is
+to decide how many samples we want to train with.</p>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>data.shape</span></code></pre>
+</div>
+<p>This tells us we have 70,000 rows in the dataset. Let us take 90% of
+the data for training and 10% for testing, so we will use the first
+63,000 samples in the dataset as the training data and the last 7,000 as
+the test data.</p>
+<div class="codewrapper sourceCode" id="cb9">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="co"># Assuming `data` is your feature matrix and `labels` is your target vector</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>    data.values,        <span class="co"># Features</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>    labels.values,      <span class="co"># Labels</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>    test_size<span class="op">=</span><span class="fl">0.1</span>,      <span class="co"># Reserve 10% of data for testing</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span>     <span class="co"># For reproducibility</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>)</span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>X_train.shape</span></code></pre>
+</div>
+<p>Now lets train the network. This line will take about one minute to
+run. We do this by calling the <code>fit</code> function inside the
+<code>mlp</code> class instance. This needs two arguments: the data
+itself, and the labels showing what class each item should be classified
+to.</p>
+<div class="codewrapper sourceCode" id="cb10">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>mlp.fit(X_train, y_train)</span></code></pre>
+</div>
+<p>Finally, we will score the accuracy of our network against both the
+original training data and the test data. If the training had converged
+to the point where each iteration of training was not improving the
+accuracy, then the accuracy of the training data should be 1.0
+(100%).</p>
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Training set score"</span>, mlp.score(X_train, y_train))</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Testing set score"</span>, mlp.score(X_test, y_test))</span></code></pre>
+</div>
+<p>Here is the complete program:</p>
+<div class="codewrapper sourceCode" id="cb12">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="im">import</span> sklearn.datasets <span class="im">as</span> skl_data</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="im">import</span> sklearn.neural_network <span class="im">as</span> skl_nn</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>data, labels <span class="op">=</span> skl_data.fetch_openml(<span class="st">'mnist_784'</span>, version<span class="op">=</span><span class="dv">1</span>, return_X_y<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>data <span class="op">=</span> data <span class="op">/</span> <span class="fl">255.0</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>mlp <span class="op">=</span> skl_nn.MLPClassifier(hidden_layer_sizes<span class="op">=</span>(<span class="dv">50</span>,), max_iter<span class="op">=</span><span class="dv">50</span>, verbose<span class="op">=</span><span class="dv">1</span>, random_state<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a>    data.values,        <span class="co"># Features</span></span>
+<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a>    labels.values,      <span class="co"># Labels</span></span>
+<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a>    test_size<span class="op">=</span><span class="fl">0.1</span>,      <span class="co"># Reserve 10% of data for testing</span></span>
+<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span>     <span class="co"># For reproducibility</span></span>
+<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a>)</span>
+<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a></span>
+<span id="cb12-19"><a href="#cb12-19" tabindex="-1"></a>mlp.fit(X_train, y_train)</span>
+<span id="cb12-20"><a href="#cb12-20" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Training set score"</span>, mlp.score(X_train, y_train))</span>
+<span id="cb12-21"><a href="#cb12-21" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Testing set score"</span>, mlp.score(X_test, y_test))</span></code></pre>
+</div>
+</div>
+<div class="section level3">
+<h3 id="prediction-using-a-multi-layer-perceptron">Prediction using a multi-layer perceptron<a class="anchor" aria-label="anchor" href="#prediction-using-a-multi-layer-perceptron"></a>
+</h3>
+<p>Now that we have trained a multi-layer perceptron, we can give it
+some input data and ask it to perform a prediction. In this case, our
+input data is a 28x28 pixel image, which can also be represented as a
+784-element list of data. The output will be a number between 0 and 9
+telling us which digit the network thinks we have supplied. The
+<code>predict</code> function in the <code>MLPClassifier</code> class
+can be used to make a prediction. Lets use the first digit from our test
+set as an example.</p>
+<p>Before we can pass it to the predictor, we need to extract one of the
+digits from the test set. We can use <code>iloc</code> on the dataframe
+to get hold of the first element in the test set. In order to present it
+to the predictor, we have to turn it into a numpy array which has the
+dimensions of 1x784 instead of 28x28. We can then call the
+<code>predict</code> function with this array as our parameter. This
+will return an array of predictions (as it could have been given
+multiple inputs), the first element of this will be the predicted digit.
+You may get a warning stating “X does not have valid feature names”,
+this is because we didn’t encode feature names into our X (digit images)
+data.</p>
+<div class="codewrapper sourceCode" id="cb13">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>test_digit <span class="op">=</span> X_test[<span class="dv">0</span>].reshape(<span class="dv">1</span>,<span class="dv">784</span>) <span class="co"># current shape is (784,)</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>test_digit_prediction <span class="op">=</span> mlp.predict(test_digit)[<span class="dv">0</span>]</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Predicted value"</span>,test_digit_prediction)</span></code></pre>
+</div>
+<p>We can now verify if the prediction is correct by looking at the
+corresponding item in the <code>labels_test</code> array.</p>
+<div class="codewrapper sourceCode" id="cb14">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Actual value"</span>,y_test[<span class="dv">0</span>])</span></code></pre>
+</div>
+<p>This should be the same value which is being predicted.</p>
+<div id="changing-the-learning-parameters" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<span class="callout-header">Discussion</span>
+<div id="changing-the-learning-parameters" class="callout-inner">
+<h3 class="callout-title">Changing the learning parameters</h3>
+<div class="callout-content">
+<p>There are several parameters which control the training of the data.
+One of these is called the learning rate. Increasing this can reduce how
+many learning iterations we need. But if this is too large you can end
+up overshooting. Try tweaking this parameter by adding the parameter
+<code>learning_rate_init</code> with a default value of 0.001. Try
+increasing it to around 0.1.</p>
+</div>
+</div>
+</div>
+<div id="using-your-own-handwriting" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<span class="callout-header">Discussion</span>
+<div id="using-your-own-handwriting" class="callout-inner">
+<h3 class="callout-title">Using your own handwriting</h3>
+<div class="callout-content">
+<p>Create an image using Microsoft Paint, the GNU Image Manipulation
+Project (GIMP) or <a href="https://jspaint.app/" class="external-link">jspaint</a>. The image
+needs to be grayscale and 28 x 28 pixels.</p>
+<p>Try to draw a digit (0-9) in the image and save it into your code
+directory.</p>
+<p>The code below loads the image (called digit.png, change to whatever
+your file is called) using the OpenCV library. Some Anaconda
+installations need this installed either through the package manager or
+by running the command: <code>conda install -c conda-forge opencv</code>
+from the anaconda terminal.</p>
+<p>OpenCV assumes that images are 3 channel red, green, blue and we have
+to convert to one channel grayscale with <code>cvtColor</code>.</p>
+<p>We also need to normalise the image by dividing each pixel by 255. To
+verify the image, we can plot it by using OpenCV’s <code>imshow</code>
+function (we could also use Matplotlib’s <code>matshow</code> function).
+To check what digit it is, we can pass it into <code>mlp.predict</code>,
+but we have to convert it from a 28x28 array to a one dimensional
+784-byte long array with the <code>reshape</code> function. Did it
+correctly classify your hand(mouse) writing? Try a few images. If you
+have time try drawing images on a touch screen or taking a photo of
+something you have really written by hand. Remember that you will have
+to resize it to be 28x28 pixels.</p>
+<div class="codewrapper sourceCode" id="cb15">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="im">import</span> cv2</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>digit <span class="op">=</span> cv2.imread(<span class="st">"digit.png"</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>digit_gray <span class="op">=</span> cv2.cvtColor(digit, cv2.COLOR_BGR2GRAY)</span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>digit_norm <span class="op">=</span> digit_gray<span class="op">/</span><span class="fl">255.0</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>cv2.imshow(<span class="st">"Normalised Digit"</span>,digit_norm)</span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Your digit is"</span>,mlp.predict(digit_norm.reshape(<span class="dv">1</span>,<span class="dv">784</span>)))</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="measuring-neural-network-performance">Measuring neural network performance<a class="anchor" aria-label="anchor" href="#measuring-neural-network-performance"></a>
+</h2>
+<hr class="half-width">
+<p>We have now trained a neural network and tested prediction on a few
+images. This might have given us a feel for how well our network is
+performing, but it would be much more useful to have a more objective
+measure. Since recognising digits is a classification problem, we can
+measure how many predictions were correct in a set of test data. As we
+already have a test set of data with 7,000 images we can use that and
+see how many predictions the neural network has gotten right. We will
+loop through every image in the test set, run it through our predictor
+and compare the result with the label for that image. We will also keep
+a tally of how many images we got right and see what percentage were
+correct.</p>
+<div class="codewrapper sourceCode" id="cb16">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>correct<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="cf">for</span> idx, row <span class="kw">in</span> <span class="bu">enumerate</span>(data_test):</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>    <span class="co"># image contains a tuple of the row number and image data</span></span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>    image <span class="op">=</span> row.reshape(<span class="dv">1</span>,<span class="dv">784</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>    prediction <span class="op">=</span> mlp.predict(image)[<span class="dv">0</span>]</span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a>    actual <span class="op">=</span> labels_test[idx]</span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a>    <span class="cf">if</span> prediction <span class="op">==</span> actual:</span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a>        correct <span class="op">=</span> correct <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a></span>
+<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a><span class="bu">print</span>((correct<span class="op">/</span><span class="bu">len</span>(data_test))<span class="op">*</span><span class="dv">100</span>)</span></code></pre>
+</div>
+<div class="section level3">
+<h3 id="confusion-matrix">Confusion matrix<a class="anchor" aria-label="anchor" href="#confusion-matrix"></a>
+</h3>
+<p>We now know what percentage of images were correctly classified, but
+we don’t know anything about the distribution of correct predictions
+across our different classes (the digits 0 to 9 in this case). A more
+powerful technique is known as a confusion matrix. Here we draw a grid
+with each class along both the x and y axis. The x axis is the actual
+number of items in each class and the y axis is the predicted number. In
+a perfect classifier, there will be a diagonal line of values across the
+grid moving from the top left to bottom right corresponding to the
+number in each class, and all other cells will be zero. If any cell
+outside of the diagonal is non-zero then it indicates a
+miss-classification. Scikit-Learn has a function called
+<code>confusion_matrix</code> in the <code>sklearn.metrics</code> class
+which can display a confusion matrix for us. It will need two inputs:
+arrays showing how many items were in each class for both the real data
+and the classifications. We already have the real data in the
+labels_test array, but we need to build it for the classifications by
+classifying each image (in the same order as the real data) and storing
+the result in another array.</p>
+<div class="codewrapper sourceCode" id="cb17">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="co"># extract all test set predictions</span></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>y_test_pred <span class="op">=</span> mlp.predict(X_test)</span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>y_test_pred</span></code></pre>
+</div>
+<p>The <code>ConfusionMatrixDisplay</code> class in the
+<code>sklearn.metrics</code> package can create a graphical
+representation of a confusion matrix with colour coding to highlight how
+many items are in each cell. This colour coding can be useful when
+working with very large numbers of classes.</p>
+<div class="codewrapper sourceCode" id="cb18">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> ConfusionMatrixDisplay</span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>ConfusionMatrixDisplay.from_predictions(y_test,y_test_pred)</span></code></pre>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="cross-validation">Cross-validation<a class="anchor" aria-label="anchor" href="#cross-validation"></a>
+</h2>
+<hr class="half-width">
+<p>Previously we split the data into training and test sets. But what if
+the test set includes important features we want to train on that happen
+to be missing in the training set? We are throwing away part of our data
+to use it in the testing set.</p>
+<p>Cross-validation runs the training/testing multiple times but splits
+the data in a different way each time. This means all of the data gets
+used both for training and testing. We can use multiple iterations of
+training with different data in each set to eventually include the
+entire dataset.</p>
+<pre><code>example list = [1,2,3,4,5,6,7,8]
+
+train = 1,2,3,4,5,6
+test = 7,8
+
+train = 1,2,3,4,7,8
+test = 5,6
+
+train = 1,2,5,6,7,8
+test = 3,4
+
+train = 3,4,5,6,7,8
+test = 1,2</code></pre>
+<p>FIXME (from material): generate an image of this</p>
+<div class="section level3">
+<h3 id="cross-validation-code-example">Cross-validation code example<a class="anchor" aria-label="anchor" href="#cross-validation-code-example"></a>
+</h3>
+<p>The <code>sklearn.model_selection</code> module provides support for
+doing k-fold cross validation in Scikit-Learn. It can automatically
+partition our data for cross validation.</p>
+<p>Import this and call it <code>skl_msel</code></p>
+<div class="codewrapper sourceCode" id="cb20">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="im">import</span> sklearn.model_selection <span class="im">as</span> skl_msel</span></code></pre>
+</div>
+<p>Now we can choose how many ways we would like to split our data
+(three or four are common choices).</p>
+<div class="codewrapper sourceCode" id="cb21">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>kfold <span class="op">=</span> skl_msel.KFold(<span class="dv">4</span>)</span></code></pre>
+</div>
+<p>Now we can loop through our data and test on each combination. The
+<code>kfold.split</code> function returns two variables and we will have
+our for loop work through both of them. The train variable will contain
+a list of which items (by index number) we are currently using to train
+and the test one will contain the list of which items we are going to
+test on.</p>
+<div class="codewrapper sourceCode" id="cb22">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="cf">for</span> (train, test) <span class="kw">in</span> kfold.split(data):</span></code></pre>
+</div>
+<p>Now inside the loop, we can select the data with
+<code>data_train = data.iloc[train]</code> and
+<code>labels_train = labels.iloc[train]</code>. In some versions of
+Python/Pandas/Scikit-Learn, you might be able to use
+<code>data_train = data[train]</code> and
+<code>labels_train = labels[train]</code>. This is a useful Python
+shorthand which will use the list of indices from <code>train</code> to
+select which items from <code>data</code> and <code>labels</code> we
+use. We can repeat this process with the test set.</p>
+<div class="codewrapper sourceCode" id="cb23">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>    data_train <span class="op">=</span> data.iloc[train]</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>    labels_train <span class="op">=</span> labels.iloc[train]</span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>    data_test <span class="op">=</span> data.iloc[test]</span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>    labels_test <span class="op">=</span> labels.iloc[test]</span></code></pre>
+</div>
+<p>Finally, we need to train the classifier with the selected training
+data and then score it against the test data. The scores for each set of
+test data should be similar.</p>
+<div class="codewrapper sourceCode" id="cb24">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>    mlp.fit(data_train,labels_train)</span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Testing set score"</span>, mlp.score(data_test, labels_test))</span></code></pre>
+</div>
+<p>Once we have established that the cross validation was ok, we can go
+ahead and train using the entire dataset by doing
+<code>mlp.fit(data,labels)</code>.</p>
+<p>Here is the entire example program:</p>
+<div class="codewrapper sourceCode" id="cb25">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a><span class="im">import</span> sklearn.datasets <span class="im">as</span> skl_data</span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a><span class="im">import</span> sklearn.neural_network <span class="im">as</span> skl_nn</span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a><span class="im">import</span> sklearn.model_selection <span class="im">as</span> skl_msel</span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a>data, labels <span class="op">=</span> skl_data.fetch_openml(<span class="st">'mnist_784'</span>, version<span class="op">=</span><span class="dv">1</span>, return_X_y<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a>data <span class="op">=</span> data <span class="op">/</span> <span class="fl">255.0</span></span>
+<span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" tabindex="-1"></a>mlp <span class="op">=</span> skl_nn.MLPClassifier(hidden_layer_sizes<span class="op">=</span>(<span class="dv">50</span>,), max_iter<span class="op">=</span><span class="dv">50</span>, random_state<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb25-10"><a href="#cb25-10" tabindex="-1"></a></span>
+<span id="cb25-11"><a href="#cb25-11" tabindex="-1"></a>kfold <span class="op">=</span> skl_msel.KFold(<span class="dv">4</span>)</span>
+<span id="cb25-12"><a href="#cb25-12" tabindex="-1"></a></span>
+<span id="cb25-13"><a href="#cb25-13" tabindex="-1"></a><span class="cf">for</span> (train, test) <span class="kw">in</span> kfold.split(data):</span>
+<span id="cb25-14"><a href="#cb25-14" tabindex="-1"></a>    data_train <span class="op">=</span> data.iloc[train]</span>
+<span id="cb25-15"><a href="#cb25-15" tabindex="-1"></a>    labels_train <span class="op">=</span> labels.iloc[train]</span>
+<span id="cb25-16"><a href="#cb25-16" tabindex="-1"></a></span>
+<span id="cb25-17"><a href="#cb25-17" tabindex="-1"></a>    data_test <span class="op">=</span> data.iloc[test]</span>
+<span id="cb25-18"><a href="#cb25-18" tabindex="-1"></a>    labels_test <span class="op">=</span> labels.iloc[test]</span>
+<span id="cb25-19"><a href="#cb25-19" tabindex="-1"></a>    mlp.fit(data_train,labels_train)</span>
+<span id="cb25-20"><a href="#cb25-20" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Training set score"</span>, mlp.score(data_train, labels_train))</span>
+<span id="cb25-21"><a href="#cb25-21" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Testing set score"</span>, mlp.score(data_test, labels_test))</span>
+<span id="cb25-22"><a href="#cb25-22" tabindex="-1"></a>mlp.fit(data,labels)</span></code></pre>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="deep-learning">Deep learning<a class="anchor" aria-label="anchor" href="#deep-learning"></a>
+</h2>
+<hr class="half-width">
+<p>Deep learning usually refers to newer neural network architectures
+which use a special type of network known as a ‘convolutional network’.
+Typically, these have many layers and thousands of neurons. They are
+very good at tasks such as image recognition but take a long time to
+train and run. They are often used with GPUs (Graphical Processing
+Units) which are good at executing multiple operations simultaneously.
+It is very common to use cloud computing or high performance computing
+systems with multiple GPUs attached.</p>
+<p>Scikit-Learn is not really setup for deep learning. We will have to
+rely on other libraries. Common choices include Google’s TensorFlow,
+Keras, (Py)Torch or Darknet. There is, however, an interface layer
+between sklearn and tensorflow called skflow. A short example of using
+this layer can be found at <a href="https://www.kdnuggets.com/2016/02/scikit-flow-easy-deep-learning-tensorflow-scikit-learn.html" class="external-link">https://www.kdnuggets.com/2016/02/scikit-flow-easy-deep-learning-tensorflow-scikit-learn.html</a>.</p>
+<div class="section level3">
+<h3 id="cloud-apis">Cloud APIs<a class="anchor" aria-label="anchor" href="#cloud-apis"></a>
+</h3>
+<p>Google, Microsoft, Amazon, and many other companys now have cloud
+based Application Programming Interfaces (APIs) where you can upload an
+image and have them return you the result. Most of these services rely
+on a large pre-trained (and often proprietary) neural network.</p>
+<div id="exercise-try-cloud-image-classification" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<span class="callout-header">Discussion</span>
+<div id="exercise-try-cloud-image-classification" class="callout-inner">
+<h3 class="callout-title">Exercise: Try cloud image classification</h3>
+<div class="callout-content">
+<p>Take a photo with your phone camera or find an image online of a
+common daily scene. Upload it to Google’s Vision AI at <a href="https://cloud.google.com/vision/" class="external-link uri">https://cloud.google.com/vision/</a> How many objects has it
+correctly classified? How many did it incorrectly classify? Try the same
+image with Microsoft’s Computer Vision API at <a href="https://azure.microsoft.com/en-gb/services/cognitive-services/computer-vision/" class="external-link uri">https://azure.microsoft.com/en-gb/services/cognitive-services/computer-vision/</a>
+Does it do any better/worse than Google?</p>
 </div>
 </div>
 </div>
@@ -2433,10 +4104,40 @@ any links that you are not going to use.
 <span class="callout-header">Key Points</span>
 <div class="callout-inner">
 <div class="callout-content">
-
+<ul>
+<li>Perceptrons are artificial neurons which build neural networks.</li>
+<li>A perceptron takes multiple inputs, multiplies each by a weight
+value and sums the weighted inputs. It then applies an activation
+function to the sum.</li>
+<li>A single perceptron can solve simple functions which are linearly
+separable.</li>
+<li>Multiple perceptrons can be combined to form a neural network which
+can solve functions that aren’t linearly separable.</li>
+<li>We can train a whole neural network with the back propagation
+algorithm. Scikit-learn includes an implementation of this
+algorithm.</li>
+<li>Training a neural network requires some training data to show the
+network examples of what to learn.</li>
+<li>To validate our training we split the training data into a training
+set and a test set.</li>
+<li>To ensure the whole dataset can be used in training and testing we
+can train multiple times with different subsets of the data acting as
+training/testing data. This is called cross validation.</li>
+<li>Deep learning neural networks are a very powerful modern machine
+learning technique. Scikit-Learn does not support these but other
+libraries like Tensorflow do.</li>
+<li>Several companies now offer cloud APIs where we can train neural
+networks on powerful computers.</li>
+</ul>
 </div>
 </div>
-</div></section><section id="aio-08-ethics"><p>Content from <a href="08-ethics.html"></a></p>
+</div>
+<!--
+Place links that you need to refer to multiple times across pages here. Delete
+any links that you are not going to use.
+ -->
+</div>
+</section></section><section id="aio-08-ethics"><p>Content from <a href="08-ethics.html">Ethics and the Implications of Machine Learning</a></p>
 <hr>
 <p>Last updated on 2025-12-05 |
 
@@ -2451,6 +4152,10 @@ any links that you are not going to use.
 <div class="card-body">
 <div class="inner">
 <h3 class="card-title">Questions</h3>
+<ul>
+<li>What are the ethical implications of using machine learning in
+research?</li>
+</ul>
 </div>
 </div>
 </div>
@@ -2458,8 +4163,116 @@ any links that you are not going to use.
 <div class="card-body">
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
+<ul>
+<li>Consider the ethical implications of machine learning, in general,
+and in research.</li>
+</ul>
 </div>
 </div>
+</div>
+</div>
+</div>
+<section><h2 class="section-heading" id="ethics-and-machine-learning">Ethics and machine learning<a class="anchor" aria-label="anchor" href="#ethics-and-machine-learning"></a>
+</h2>
+<hr class="half-width">
+<p>As machine learning has risen in visibility, so to have concerns
+around the ethics of using the technology to make predictions and
+decisions that will affect people in everyday life. For example:</p>
+<ul>
+<li>The first death from a driverless car which failed to brake for a
+pedestrian <a href="https://www.forbes.com/sites/meriameberboucha/2018/05/28/uber-self-driving-car-crash-what-really-happened/" class="external-link">[1]</a>.</li>
+<li>Highly targetted advertising based around social media and internet
+usage <a href="https://www.wired.com/story/big-tech-can-use-ai-to-extract-many-more-ad-dollars-from-our-clicks/" class="external-link">[2]</a>.</li>
+<li>The outcomes of elections and referenda being influenced by highly
+targetted social media posts. This is compounded by data being obtained
+without the user’s consent <a href="https://www.vox.com/policy-and-politics/2018/3/23/17151916/facebook-cambridge-analytica-trump-diagram" class="external-link">[3]</a>.</li>
+<li>The widespread use of facial recognition technologies <a href="https://www.bbc.co.uk/news/technology-44089161" class="external-link">[4]</a>.</li>
+<li>The potential for autonomous military robots to be deployed in
+combat <a href="https://www.theverge.com/2021/6/3/22462840/killer-robot-autonomous-drone-attack-libya-un-report-context" class="external-link">[5]</a>.</li>
+</ul>
+<div class="section level3">
+<h3 id="problems-with-bias">Problems with bias<a class="anchor" aria-label="anchor" href="#problems-with-bias"></a>
+</h3>
+<p>Machine learning systems are often argued to be be fairer and more
+impartial in their decision-making than human beings, who are argued to
+be more emotional and biased, for example, when sentencing criminals or
+deciding if someone should be granted bail. But there are an increasing
+number of examples where machine learning systems have been exposed as
+biased due to the data they were trained on. This can occur due to the
+training data being unrepresentative or just under representing certain
+cases or groups. For example, if you were trying to automatically screen
+job candidates and your training data consisted only of people who were
+previously hired by the company, then any biases in employment processes
+would be reflected in the results of the machine learning.</p>
+</div>
+<div class="section level3">
+<h3 id="problems-with-explaining-decisions">Problems with explaining decisions<a class="anchor" aria-label="anchor" href="#problems-with-explaining-decisions"></a>
+</h3>
+<p>Many machine learning systems (e.g. neural networks) can’t really
+explain their decisions. Although the input and output are known, trying
+to explain why the training caused the network to behave in a certain
+way can be very difficult. When decisions are questioned by a human it’s
+difficult to provide any rationale for how a decision was arrived
+at.</p>
+</div>
+<div class="section level3">
+<h3 id="problems-with-accuracy">Problems with accuracy<a class="anchor" aria-label="anchor" href="#problems-with-accuracy"></a>
+</h3>
+<p>No machine learning system is ever 100% accurate. Getting into the
+high 90s is usually considered good. But when we’re evaluating millions
+of data items this can translate into 100s of thousands of
+mis-identifications. This would be an unacceptable margin of error if
+the results were going to have major implications for people, such as
+criminal sentencing decisions or structuring debt repayments.</p>
+</div>
+<div class="section level3">
+<h3 id="energy-use">Energy use<a class="anchor" aria-label="anchor" href="#energy-use"></a>
+</h3>
+<p>Many machine learning systems (especially deep learning) need vast
+amounts of computational power which in turn can consume vast amounts of
+energy. Depending on the source of that energy this might account for
+significant amounts of fossil fuels being burned. It is not uncommon for
+a modern GPU-accelerated computer to use several kilowatts of power.
+Running this system for one hour could easily use as much energy a
+typical home in the OECD would use in an entire day. Energy use can be
+particularly high when models are constantly being retrained or when
+“parameter sweeps” are done to find the best set of parameters to train
+with.</p>
+</div>
+</section><section><h2 class="section-heading" id="ethics-of-machine-learning-in-research">Ethics of machine learning in research<a class="anchor" aria-label="anchor" href="#ethics-of-machine-learning-in-research"></a>
+</h2>
+<hr class="half-width">
+<p>Not all research using machine learning will have major ethical
+implications. Many research projects don’t directly affect the lives of
+other people, but this isn’t always the case.</p>
+<p>Some questions you might want to ask yourself (and which an ethics
+committee might also ask you):</p>
+<ul>
+<li>Will the results of your machine learning influence a decision that
+will have a significant effect on a person’s life?</li>
+<li>Will the results of your machine learning influence a decision that
+will have a significant effect on an animial’s life?</li>
+<li>Will you be using any people to create your training data, and if
+so, will they have to look at any disturbing or traumatic material
+during the training process?</li>
+<li>Are there any inherent biases in the dataset(s) you’re using for
+training?</li>
+<li>How much energy will this computation use? Are there more efficient
+ways to get the same answer?</li>
+</ul>
+<div id="exercise-ethical-implications-of-your-own-research" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<span class="callout-header">Discussion</span>
+<div id="exercise-ethical-implications-of-your-own-research" class="callout-inner">
+<h3 class="callout-title">Exercise: Ethical implications of your own
+research</h3>
+<div class="callout-content">
+<p>Split into pairs or groups of three. Think of a use case for machine
+learning in your research areas. What ethical implications (if any)
+might there be from using machine learning in your research? Write down
+your group’s answers in the etherpad.</p>
 </div>
 </div>
 </div>
@@ -2470,10 +4283,23 @@ any links that you are not going to use.
 <span class="callout-header">Key Points</span>
 <div class="callout-inner">
 <div class="callout-content">
-
+<ul>
+<li>The results of machine learning reflect biases in the training and
+input data.</li>
+<li>Many machine learning algorithms can’t explain how they arrived at a
+decision.</li>
+<li>Machine learning can be used for unethical purposes.</li>
+<li>Consider the implications of false positives and false
+negatives.</li>
+</ul>
 </div>
 </div>
-</div></section><section id="aio-09-learn-more"><p>Content from <a href="09-learn-more.html"></a></p>
+</div>
+<!--
+Place links that you need to refer to multiple times across pages here. Delete
+any links that you are not going to use.
+ -->
+</section></section><section id="aio-09-learn-more"><p>Content from <a href="09-learn-more.html">Find out more</a></p>
 <hr>
 <p>Last updated on 2025-12-05 |
 
@@ -2488,6 +4314,9 @@ any links that you are not going to use.
 <div class="card-body">
 <div class="inner">
 <h3 class="card-title">Questions</h3>
+<ul>
+<li>Where can you find out more about machine learning?</li>
+</ul>
 </div>
 </div>
 </div>
@@ -2495,11 +4324,53 @@ any links that you are not going to use.
 <div class="card-body">
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
+<ul>
+<li>Know where to go to learn more about machine learning</li>
+</ul>
 </div>
 </div>
 </div>
 </div>
 </div>
+<section><h2 class="section-heading" id="other-algorithms">Other algorithms<a class="anchor" aria-label="anchor" href="#other-algorithms"></a>
+</h2>
+<hr class="half-width">
+<p>There are many other machine learning algorithms that might be
+suitable for helping you to answer your research questions.</p>
+<p>The Scikit-Learn <a href="https://scikit-learn.org/stable/index.html" class="external-link">webpage</a> has a good
+overview of all the features available in the library.</p>
+<div class="section level3">
+<h3 id="genetic-algorithms">Genetic algorithms<a class="anchor" aria-label="anchor" href="#genetic-algorithms"></a>
+</h3>
+<p>Genetic algorithms are techniques which try to mimic biological
+evolution. They will learn to solve a problem through a gradual process
+of simulated evolution. Each generation is mutated slightly and then
+evaluated with a fitness function. The fittest “genes” will then be
+selected for the next generation. Sometimes this is combined with neural
+networks to change the networks size structure.</p>
+<p>This <a href="https://www.youtube.com/watch?v=qv6UVOQ0F44" class="external-link">video</a>
+shows a genetic algorithm evolving neural networks to play a video
+game.</p>
+</div>
+</section><section><h2 class="section-heading" id="useful-resources">Useful Resources<a class="anchor" aria-label="anchor" href="#useful-resources"></a>
+</h2>
+<hr class="half-width">
+<ul>
+<li><p><a href="https://vas3k.com/blog/machine_learning/" class="external-link">Machine
+Learning for Everyone</a> - A useful overview of many different machine
+learning techniques, all introduced in an easy to follow way.</p></li>
+<li><p><a href="https://developers.google.com/machine-learning/crash-course/" class="external-link">Google
+machine learning crash course</a> - A quick course from Google on how to
+use some of their machine learning products.</p></li>
+<li><p><a href="https://research.fb.com/the-facebook-field-guide-to-machine-learning-video-series/" class="external-link">Facebook
+Field Guide to Machine Learning</a> - A good introduction to machine
+learning concepts from Facebook.</p></li>
+<li><p><a href="https://docs.aws.amazon.com/machine-learning/latest/dg/amazon-machine-learning-key-concepts.html" class="external-link">Amazon
+Machine Learning guide</a> - An introduction to the key concepts in
+machine learning from Amazon.</p></li>
+<li><p><a href="https://azure.microsoft.com/en-gb/overview/ai-platform/" class="external-link">Azure
+AI</a> - Microsoft’s Cloud based AI platform.</p></li>
+</ul>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -2507,10 +4378,20 @@ any links that you are not going to use.
 <span class="callout-header">Key Points</span>
 <div class="callout-inner">
 <div class="callout-content">
-
+<ul>
+<li>This course has only touched on a few areas of machine learning and
+is designed to teach you just enough to do something useful.</li>
+<li>Machine learning is a rapidly evolving field and new tools and
+techniques are constantly appearing.</li>
+</ul>
 </div>
 </div>
-</div></section>
+</div>
+<!--
+Place links that you need to refer to multiple times across pages here. Delete
+any links that you are not going to use.
+ -->
+</section></section>
 </div>
     </main>
 </div>
