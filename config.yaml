@@ -66,7 +66,16 @@ contact: 'team@carpentries.org' # FIXME
 
 # Order of episodes in your lesson
 episodes: 
-- introduction.md
+- 01-introduction.md
+- 02-regression.md
+- 03-classification.md
+- 04-ensemble-methods.md
+- 05-clustering.md
+- 06-dimensionality-reduction.md
+- 07-neural-networks.md
+- 08-ethics.md
+- 09-learn-more.md
+
 
 # Information for Learners
 learners: 
