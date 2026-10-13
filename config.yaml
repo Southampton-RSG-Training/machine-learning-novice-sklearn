@@ -10,7 +10,8 @@
 # incubator: The Carpentries Incubator
 # Note that you can also use a custom carpentry type. For more info,
 # see the documentation: https://carpentries.github.io/sandpaper-docs/editing.html
-carpentry: 'incubator'
+carpentry: 'rsg'
+carpentry_description: 'Southampton Research Software Group'
 
 # Custom carpentry description
 # This will be used as the alt text for the logo
@@ -33,13 +34,13 @@ life_cycle: 'alpha'
 license: 'CC-BY 4.0'
 
 # Link to the source repository for this lesson
-source: 'https://github.com/carpentries-incubator/machine-learning-novice-sklearn'
+source: 'https://github.com/Southampton-RSG-Training/machine-learning-novice-sklearn'
 
 # Default branch of your lesson
 branch: 'main'
 
 # Who to contact if there are any issues
-contact: 'team@carpentries.org'
+contact: 'rsg-info@soton.ac.uk'
 
 # Navigation ------------------------------------------------
 #
@@ -64,7 +65,7 @@ contact: 'team@carpentries.org'
 # - another-learner.md
 
 # Order of episodes in your lesson
-episodes: 
+episodes:
 - 01-introduction.md
 - 02-regression.md
 - 03-classification.md
@@ -76,21 +77,20 @@ episodes:
 - 09-learn-more.md
 
 # Information for Learners
-learners: 
+learners:
 
 # Information for Instructors
-instructors: 
+instructors:
 
 # Learner Profiles
-profiles: 
+profiles:
 
 # Customisation ---------------------------------------------
 #
 # This space below is where custom yaml items (e.g. pinning
 # sandpaper and varnish versions) should live
+varnish: Southampton-RSG-Training/varnish
 
 
-carpentry_description: Lesson Description
-url: 'https://carpentries-incubator.github.io/machine-learning-novice-sklearn'
-analytics: carpentries
+url: 'https://southampton-rsg-training.github.io/machine-learning-novice-sklearn'
 lang: en
